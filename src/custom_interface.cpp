@@ -24,6 +24,7 @@ CustomInterface::CustomInterface( const double& loop_rate )
       motor_ctrl_Lcm_( GetLcmUrl_Port( 7667, 255 ) ), leg_data_Lcm_( GetLcmUrl_Port( 7667, 255 ) ) {
 
     running_         = true;
+    motor_initialized = false;
     all_thread_done_ = false;
 
     robot_data_.err_flag |= 0x02;
@@ -77,8 +78,10 @@ void CustomInterface::Control() {
             Zero_Cmd( motor_cmd_ );
             first_run = true;
         }
-        else
+        else {
             first_run = false;
+            motor_initialized = true;
+        }
 
         for ( int i = 0; i < 12; i++ ) {
             if ( robot_data_.motor_flags[ i ] & 0x3FFFFFFF ) {

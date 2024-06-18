@@ -67,9 +67,10 @@ protected:
     virtual void UserCode( bool first_run ) = 0;
     RobotData    robot_data_;
     MotorCmd     motor_cmd_;
+    double dt_;
+    bool motor_initialized;
 
 private:
-    double dt_;
     bool   running_;
     bool   all_thread_done_;
 
